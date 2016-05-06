@@ -1,0 +1,57 @@
+@import "variables";
+@import "themes";
+
+/*
+    Common styles
+*/
+#ninja, #ninja2 {
+
+}
+
+body {
+  font-family: sans-serif;
+  text-align: center;
+  overflow-x: hidden;
+  padding: 0 40px;
+}
+
+.info {
+  overflow: hidden;
+  margin-bottom: 25px;
+}
+
+.icon {
+  width: 70px;
+  height: 70px;
+  margin-right: 10px;
+  display: inline-block;
+  background-color: aliceblue;
+  float: left;
+}
+
+h3 {
+  font-size: 24px;
+  color: #555;
+  margin: 0;
+}
+
+p {
+  font-size: 14px;
+  color: #999;
+}
+
+.label {
+  text-align: right;
+  margin-top: -31px;
+  font-size: 20px;
+  color: #555;
+}
+
+.label span {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.center {
+  text-align: center;
+}
