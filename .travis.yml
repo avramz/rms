@@ -4,6 +4,9 @@ install:
   - bower install
   - gulp
 sudo: false
+before_script:
+  - npm install -g gulp
+script: gulp
 node_js:
   - "0.10"
   - "0.12"
