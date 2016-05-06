@@ -5,6 +5,5 @@ install:
 sudo: false
 script: gulp
 node_js:
-  - "0.10"
   - "0.12"
   - "4.1"
