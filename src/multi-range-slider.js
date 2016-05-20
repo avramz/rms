@@ -56,6 +56,7 @@
                 lockClass: opts.lockClass,
                 useLock: opts.useLock,
                 onDrag: _updateSlides,
+                onDragEnd: opts.onDragEnd,
                 onLock: _updateMaxValues,
                 sliders: sliders
             });
@@ -78,7 +79,7 @@
             me.normalizeSlides(_slider);
 
             if (me.onDrag && typeof me.onDrag === 'function') {
-                me.onDrag(sliders);
+                me.onDrag(_slider, sliders);
             }
         }
 
@@ -243,6 +244,7 @@
 
         // expose properties
         this.onDrag = config.onDrag;
+        this.onDragEnd = config.onDragEnd;
         this.onLock = config.onLock;
         this.step = config.step ? config.step : 1;
         this.minValue = config.minValue;
@@ -342,6 +344,7 @@
             me.removeEventListeners(document, 'touchend', _upHandler);
             me.removeEventListeners(document, 'pointerup', _upHandler);
             me.isDown = false;
+            me.onDragEnd(me);
         }
 
         /**
@@ -497,6 +500,8 @@
         onInit: function () {
         },
         onDrag: function () {
+        },
+        onDragEnd: function () {
         }
     };
 
