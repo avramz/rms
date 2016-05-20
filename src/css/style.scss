@@ -1,18 +1,24 @@
 @import "variables";
 @import "themes";
+@import "icons";
 
 /*
     Common styles
 */
-#ninja, #ninja2 {
 
+#rms {
+  padding: 0 20px;
 }
 
 body {
   font-family: sans-serif;
   text-align: center;
   overflow-x: hidden;
-  padding: 0 40px;
+  margin: 0;
+}
+
+.cont {
+  padding: 0 20px;
 }
 
 .info {
@@ -23,10 +29,15 @@ body {
 .icon {
   width: 70px;
   height: 70px;
-  margin-right: 10px;
   display: inline-block;
-  background-color: aliceblue;
+  font-size: 60px;
+  text-align: left;
   float: left;
+
+  .icon-SMS {
+    font-size: 70px;
+    margin-left: -24px;
+  }
 }
 
 h3 {
@@ -54,4 +65,19 @@ p {
 
 .center {
   text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+  h3 {
+    font-size: 22px;
+  }
+
+  .icon {
+    font-size: 40px;
+
+    .icon-SMS {
+      font-size: 50px;
+      margin-left: -17px;
+    }
+  }
 }

@@ -1,0 +1,109 @@
+@font-face {
+  font-family: 'icomoon';
+  src:    url('../../src/fonts/icomoon.eot?vssjhq');
+  src:    url('../../src/fonts/icomoon.eot?vssjhq#iefix') format('embedded-opentype'),
+  url('../../src/fonts/icomoon.ttf?vssjhq') format('truetype'),
+  url('../../src/fonts/icomoon.woff?vssjhq') format('woff'),
+  url('../../src/fonts/icomoon.svg?vssjhq#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-chevron-left:before, .icon-chevron-left:after {
+  content: "\e900";
+}
+.icon-chevron-left:after {
+  display: inline-block;
+  transform: rotate(180deg);
+}
+.icon-calls .path1:before {
+  content: "\e901";
+  color: rgba(118, 118, 118, 0.2);
+}
+.icon-calls .path2:before {
+  content: "\e902";
+  margin-left: -1em;
+  color: rgb(118, 118, 118);
+}
+.icon-calls .path3:before {
+  content: "\e903";
+  margin-left: -1em;
+  color: rgb(118, 118, 118);
+}
+.icon-calls .path4:before {
+  content: "\e904";
+  margin-left: -1em;
+  color: rgba(118, 118, 118, 0.2);
+}
+.icon-calls .path5:before {
+  content: "\e905";
+  margin-left: -1em;
+  color: rgb(118, 118, 118);
+}
+.icon-calls .path6:before {
+  content: "\e906";
+  margin-left: -1em;
+  color: rgb(118, 118, 118);
+}
+.icon-mobile-net .path1:before {
+  content: "\e907";
+  color: rgb(118, 118, 118);
+}
+.icon-mobile-net .path2:before {
+  content: "\e908";
+  margin-left: -1em;
+  color: rgba(118, 118, 118, 0.2);
+}
+.icon-security .path1:before {
+  content: "\e909";
+  color: rgba(228, 228, 228, 0.8);
+}
+.icon-security .path2:before {
+  content: "\e90a";
+  margin-left: -1.46484375em;
+  color: rgba(85, 85, 85, 0.8);
+}
+.icon-security .path3:before {
+  content: "\e90b";
+  margin-left: -1.46484375em;
+  color: rgba(85, 85, 85, 0.8);
+}
+.icon-SMS .path1:before {
+  content: "\e90c";
+  color: rgba(86, 86, 86, 0.8);
+}
+.icon-SMS .path2:before {
+  content: "\e90d";
+  margin-left: -1.46484375em;
+  color: rgba(86, 86, 86, 0.16000000000000003);
+}
+.icon-SMS .path3:before {
+  content: "\e90e";
+  margin-left: -1.46484375em;
+  color: rgba(86, 86, 86, 0.16000000000000003);
+}
+.icon-SMS .path4:before {
+  content: "\e90f";
+  margin-left: -1.46484375em;
+  color: rgba(255, 255, 255, 0.8);
+}
+.icon-SMS .path5:before {
+  content: "\e910";
+  margin-left: -1.46484375em;
+  color: rgba(86, 86, 86, 0.16000000000000003);
+}

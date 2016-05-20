@@ -8,13 +8,13 @@
     <script src="../bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
     <script src="../dist/multi-range-slider.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-        var $p1, $plugin;
+        var $plugin;
 
         $(document).ready(function () {
-           $plugin = $('#ninja').MultiRangeSlider({
+           $plugin = $('#rms').MultiRangeSlider({
                 rangeSelector: '.slide',
                 lockClass: 'test-lock',
-                handleClass: 'handle',
+                handleClass: 'icon-chevron-left',
                 onInit: function (sliders) {
                     console.log('plugin initialized ', sliders);
                 },
@@ -22,26 +22,6 @@
                     $('#test').html($plugin.getSlideSum())
                 }
             });
-
-            $p1 = $('.plugin').MultiRangeSlider({
-                rangeSelector: '.slide',
-                useLock: false,
-                onInit: function (sliders) {
-                    console.log('plugin initialized ', sliders);
-//                    sliders.sms.$label.text(Math.round(sliders.gprs.getValue() * 1024))
-                },
-                onDrag: function (sliders) {
-//                    sliders.sms.$label.text(Math.round(sliders.gprs.getValue() * 1024))
-                }
-            });
-
-//            $('#test').MultiRangeSlider({
-//                rangeSelector: '.slide',
-//                useLock: false,
-//                onInit: function (sliders) {
-//                    console.log('plugin initialized ', sliders);
-//                }
-//            });
 
             $('#reset1').on('click', function () {
                 $plugin.reset();
@@ -51,13 +31,13 @@
 </head>
 <body>
 <h1>Demo</h1>
-
-<div id="ninja">
+<div class="cont">
+<div id="rms">
     <div class="slide-wrap">
         <div class="slide" data-rms-step="0.08" data-rms-name="voice" data-rms-max="110">
             <div class="info">
                 <div class="title">
-                    <span class="icon"></span>
+                    <span class="icon"><span class="icon-calls"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span></span></span>
 
                     <h3>Pozivi</h3>
 
@@ -74,26 +54,9 @@
         <div class="slide" data-rms-step="0.03" data-rms-min="100" data-rms-max="300" data-rms-name="sms">
             <div class="info">
                 <div class="title">
-                    <span class="icon"></span>
+                    <span class="icon"><span class="icon-SMS"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span></span>
 
                     <h3>Poruke</h3>
-
-                    <p>Odaberite koliko SMS poruka zelite</p>
-                </div>
-                <div class="label">
-                    <span data-rms-label></span>
-                    Sms
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="slide-wrap">
-        <div class="slide" data-rms-step="0.07" data-rms-min="70" data-rms-max="400" data-rms-name="test">
-            <div class="info">
-                <div class="title">
-                    <span class="icon"></span>
-
-                    <h3>Test</h3>
 
                     <p>Odaberite koliko SMS poruka zelite</p>
                 </div>
@@ -108,7 +71,7 @@
         <div class="slide" data-rms-step="0.005" data-rms-min="1500" data-rms-max="1800" data-rms-name="gprs">
             <div class="info">
                 <div class="title">
-                    <span class="icon"></span>
+                    <span class="icon"><span class="icon-mobile-net"><span class="path1"></span><span class="path2"></span></span></span>
 
                     <h3>Internet</h3>
 
@@ -122,7 +85,7 @@
         </div>
     </div>
 </div>
-
+</div>
 <br>
 
 <button id="reset1">Resetuj Resurse (slide 1)</button>
@@ -130,43 +93,6 @@
 <br>
 <br>
 
-<div id="ninja2" class="plugin">
-    <div class="slide-wrap">
-        <div class="slide" data-rms-step="0.18" data-rms-name="voice" data-rms-max="190">
-            <br>
-            <div class="label center">
-                <span data-rms-label></span>
-                Min
-            </div>
-            <br>
-        </div>
-    </div>
-    <div class="slide-wrap">
-        <div class="slide" data-rms-step="0.023" data-rms-min="100" data-rms-max="500" >
-            <br>
-            <div class="label center">
-                <span data-rms-label></span>
-                Sms
-            </div>
-            <br>
-        </div>
-    </div>
-    <div class="slide-wrap">
-        <div class="slide" data-rms-step="0.075" data-rms-min="1000" data-rms-max="1300" data-rms-name="gprs">
-            <br>
-            <div class="label center">
-                <span data-rms-label></span>
-                kb
-            </div>
-            <br>
-        </div>
-    </div>
-</div>
-
-<h2>2 el</h2>
-<div id="test" class="plugin">
-
-</div>
-
+<div id="test"></div>
 </body>
 </html>

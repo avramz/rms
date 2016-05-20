@@ -1,5 +1,5 @@
 .rms-slide {
-  width: 100%;
+  width: 97%;
   position: relative;
   margin: 30px 0;
   text-align: left;
@@ -62,11 +62,22 @@
     z-index: 2;
     vertical-align: middle;
     background-color: #ee3e43;
-    color: #2C3D4F;
+    color: #fff;
     font-family: sans-serif;
     top: -16px;
+    font-size: 16px;
 
     transition: all .3s ease-in-out;
+
+    &:before, &:after {
+      position: absolute;
+      top: 9px;
+      left: 4px;
+    }
+
+    &:after {
+      left: 14px;
+    }
   }
 
   .rms-slide-lock {
@@ -77,8 +88,8 @@
     background-color: #e74c3c;
     border-radius: 3px;
     position: absolute;
-    right: -25px;
-    top: 89px;
+    right: -35px;
+    bottom: -5px;
     transition: all .3s ease-in;
 
     &:before {
@@ -147,6 +158,12 @@
       position: absolute;
       top: 8px;
       left: 17px;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .label {
+      display: none;
     }
   }
 }
