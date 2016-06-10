@@ -125,9 +125,7 @@
 
             $.each(me.sliders, function (i, __slider) {
                 if (!__slider.isLocked) {
-                    if (__slider.maxValue > me.maxValue) {
-                        __slider.totalValue = __slider.minValue + me.maxValue;
-                    }
+                    __slider.totalValue = __slider.minValue + me.maxValue;
                 }
             });
         }
@@ -284,7 +282,7 @@
 
             dragValue = Math.round(((pos - me.$range.offset().left) * me.maxValue / me.$range.outerWidth()));
 
-            if (me.isDown && pos >= me.$range.offset().left && pos <= (me.$range.offset().left + me.$range.outerWidth())) {
+            if (me.isDown) {
                 if (dragValue > max) {
                     me.setValue(max);
                     return;
