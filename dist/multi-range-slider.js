@@ -16,9 +16,9 @@
     $.fn.MultiRangeSlider = function (options) {
         var _inst = [];
 
-        this.each(function () {
-            if (!$.data(this, 'rms_x')) {
-                _inst.push($.data(this, 'rms_x', new Plugin(this, options)));
+        $.each(this, function (i, _plugin) {
+            if (!$.data(_plugin, 'rms_x')) {
+                _inst.push($.data(_plugin, 'rms_x', new Plugin(_plugin, options)));
             }
         });
 
@@ -56,7 +56,7 @@
                 lockClass: opts.lockClass,
                 useLock: opts.useLock,
                 onDrag: _updateSlides,
-                onDragEnd: opts.onDragEnd,
+                onDragEnd: _onDragEnd,
                 onLock: _updateMaxValues,
                 sliders: sliders
             });
@@ -65,9 +65,20 @@
         //expose sliders for manipulation
         this.sliders = sliders;
         this.onDrag = opts.onDrag;
+        this.onDragEnd = opts.onDragEnd;
         this.onInit = opts.onInit;
+        this.onInit(me);
 
-        this.onInit(sliders);
+        /**
+         * Return slider as all sliders onDragEnd.
+         * @param _slider
+         * @private
+         */
+        function _onDragEnd(_slider) {
+            if (me.onDragEnd && typeof me.onDragEnd === 'function') {
+                me.onDragEnd(_slider, me);
+            }
+        }
 
         /**
          * Handle slide movement logic.
@@ -79,7 +90,7 @@
             me.normalizeSlides(_slider);
 
             if (me.onDrag && typeof me.onDrag === 'function') {
-                me.onDrag(_slider, sliders);
+                me.onDrag(_slider, me);
             }
         }
 
@@ -381,7 +392,7 @@
         this.cachePosition = Math.round((this.value * this.$range.outerWidth()) / this.maxValue);
         this.$handle.css('left', Math.round((this.cachePosition - (this.$handle.outerWidth() / 2))) + 'px');
         this.$fill.css('width', this.cachePosition + 'px');
-        this.onDrag(this);
+//        this.onDrag(this);
     };
 
     /**
