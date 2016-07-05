@@ -22,6 +22,8 @@
                         _slider.setValue(_slider.minValue + Math.round(plugin.maxValue / 3));
                         $('#test').html(plugin.getSlideSum())
                     });
+
+                    plugin.fillMode = true;
                 },
                 onDrag: function (slider, plugin) {
                     $('#test').html(plugin.getSlideSum())
@@ -63,6 +65,13 @@
 
             $('#reset1').on('click', function () {
                 $plugin.reset();
+//                debugger;
+                $.each($plugin.sliders, function(i, _slider){
+                    console.log(_slider.minValue + Math.round($plugin.initialMax / 3));
+                    _slider.setValue(_slider.minValue + Math.round($plugin.initialMax / 3), false);
+                    $('#test').html($plugin.getSlideSum())
+                });
+                $plugin.fillMode = true;
             });
         });
     </script>
@@ -90,7 +99,7 @@
         </div>
     </div>
     <div class="slide-wrap">
-        <div class="slide" data-rms-step="0.03" data-rms-min="100" data-rms-max="300" data-rms-name="sms">
+        <div class="slide" data-rms-step="0.03" data-rms-max="300" data-rms-name="sms">
             <div class="info">
                 <div class="title">
                     <span class="icon"><span class="icon-SMS"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span></span>
@@ -107,7 +116,7 @@
         </div>
     </div>
     <div class="slide-wrap">
-        <div class="slide" data-rms-step="0.005" data-rms-min="1500" data-rms-max="1800" data-rms-name="gprs">
+        <div class="slide" data-rms-step="0.005" data-rms-min="750" data-rms-max="2530" data-rms-name="gprs">
             <div class="info">
                 <div class="title">
                     <span class="icon"><span class="icon-mobile-net"><span class="path1"></span><span class="path2"></span></span></span>

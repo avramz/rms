@@ -38,6 +38,7 @@
 
         this.maxValue = _getSlidesMaxValue(element);
         this.initialMax = this.maxValue;
+        this.fillMode = false;
 
         $(element).find(opts.rangeSelector).each(function (i) {
             var sliderName = $(this).attr('data-rms-name') || 'slide-' + i;
@@ -124,11 +125,13 @@
          * @private
          */
         function _updateMaxValues() {
-            var totalLockSlidesAmount = 0;
+            var totalLockSlidesAmount = 0,
+                lockedSliderNum = 0;
 
             $.each(me.sliders, function (i, __slider) {
                 if (__slider.isLocked) {
                     totalLockSlidesAmount += Math.abs(__slider.getValue() - __slider.minValue);
+                    lockedSliderNum++;
                 }
             });
 
@@ -136,9 +139,46 @@
 
             $.each(me.sliders, function (i, __slider) {
                 if (!__slider.isLocked) {
-                    __slider.totalValue = __slider.minValue + me.maxValue;
+                    __slider.totalValue = __slider.minValue + me.maxValue > __slider.maxValue ? __slider.maxValue : __slider.minValue + me.maxValue;
                 }
             });
+
+            _updateMinValues();
+        }
+
+        /**
+         * Iterate trough sliders and set min values.
+         * @private
+         */
+        function _updateMinValues() {
+            $.each(me.sliders, function (i, __slider) {
+               _setMinValue(__slider);
+            });
+        }
+
+        /**
+         * Calculate min values.
+         * @param slider
+         * @private
+         */
+        function _setMinValue(slider) {
+            var totalUnlockedSlidesMax = me.getSlideSum(true),
+                totalMaxValue = 0;
+
+            $.each(me.sliders, function (i, __slider) {
+                if (slider.id !== __slider.id) {
+                    if (!__slider.isLocked) {
+                        totalMaxValue += __slider.totalValue - __slider.getValue();
+                    }
+                }
+            });
+
+            if (slider.getValue() - totalMaxValue > slider.minValue) {
+                slider.totalMinValue = slider.getValue() - totalMaxValue;
+            }
+            else {
+                slider.totalMinValue = slider.minValue;
+            }
         }
     }
 
@@ -167,6 +207,8 @@
      * @public
      */
     Plugin.prototype.reset = function () {
+        this.fillMode = false;
+        this.maxValue = this.initialMax;
         $.each(this.sliders, function (i, __slider) {
             __slider.reset();
         });
@@ -178,16 +220,23 @@
      * @public
      */
     Plugin.prototype.normalizeSlides = function (_slider) {
-        var slidersToDistribute = [];
+        var slidersToDistribute = [],
+            me = this;
 
         $.each(this.sliders, function (i, __slider) {
-            if (!__slider.isDisabled && __slider.getValue() > __slider.minValue && __slider.id !== _slider.id && !__slider.isLocked) {
+            if (me.fillMode && !__slider.isDisabled && __slider.id !== _slider.id && !__slider.isLocked) {
+                slidersToDistribute.push(__slider);
+            }
+            else if (!__slider.isDisabled && __slider.getValue() > __slider.minValue && __slider.id !== _slider.id && !__slider.isLocked) {
                 slidersToDistribute.push(__slider);
             }
         });
 
         if (this.getSlideSum(true) > this.maxValue) {
-            this.updateSlides(Math.abs(this.getSlideSum(true) - this.maxValue), slidersToDistribute);
+            this.updateSlides(Math.abs(this.getSlideSum(true) - this.maxValue), slidersToDistribute, true);
+        }
+        else if ((this.getSlideSum(true) < this.maxValue) && this.fillMode) {
+            this.updateSlides(Math.abs(this.getSlideSum(true) - this.maxValue), slidersToDistribute, !this.fillMode);
         }
     };
 
@@ -195,9 +244,10 @@
      * Update other slides when other slide is being moved.
      * @param amountToDistribute
      * @param slides
+     * @param x
      * @public
      */
-    Plugin.prototype.updateSlides = function (amountToDistribute, slides) {
+    Plugin.prototype.updateSlides = function (amountToDistribute, slides, x) {
         var slideNum = slides.length,
             amount = amountToDistribute,
             amountPerSlider = Math.floor(amount / slideNum),
@@ -207,11 +257,16 @@
 
         for (var i = 0, max = slideNum; i < max; i++) {
             var extra = i < leftover ? 1 : 0,
-                newSliderValue = slides[i].getValue() - (amountPerSlider + extra);
+                newSliderValue = x ? slides[i].getValue() - (amountPerSlider + extra) : slides[i].getValue() + (amountPerSlider + extra);
 
             if (newSliderValue < slides[i].minValue) {
                 slides[i].setValue(slides[i].minValue, false);
                 amountLeftover += Math.abs(newSliderValue - slides[i].minValue);
+            }
+            else if (newSliderValue > slides[i].maxValue) {
+                slides[i].setValue(slides[i].maxValue, false);
+                amountLeftover += Math.abs(newSliderValue - slides[i].maxValue);
+
             }
             else {
                 slides[i].setValue(newSliderValue, false);
@@ -220,7 +275,7 @@
         }
 
         if (amountLeftover > 0) {
-            this.updateSlides(amountLeftover, slideLeftover);
+            this.updateSlides(amountLeftover, slideLeftover, x);
         }
     };
 
@@ -260,6 +315,7 @@
         this.maxValue = config.maxValue;
         this.value = config.value ? config.value : this.minValue;
         this.totalValue = config.totalValue + this.maxValue;
+        this.totalMinValue = this.minValue;
         this.cachePosition = null;
 
         // attach mouse down listeners
@@ -298,8 +354,8 @@
                     me.setValue(max);
                     return;
                 }
-                else if (dragValue < me.minValue) {
-                    me.setValue(me.minValue);
+                else if (dragValue < me.totalMinValue) { //todo: vrati na min value
+                    me.setValue(me.totalMinValue);
                     return;
                 }
 
@@ -400,6 +456,8 @@
      * @public
      */
     Slider.prototype.reset = function () {
+        this.totalMinValue = this.minValue;
+        this.totalValue = this.maxValue;
         this.value = this.minValue;
         this.$element.removeClass('disabled');
         this.isLocked = false;
@@ -422,8 +480,8 @@
         if (val >= max) {
             this.value = max;
         }
-        else if (val <= this.minValue) {
-            this.value = this.minValue;
+        else if (val <= this.totalMinValue) {
+            this.value = this.totalMinValue;
         }
 
         if (this.isLocked) {
